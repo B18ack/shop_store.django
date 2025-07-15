@@ -1,0 +1,73 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Ashion Shop{% endblock %}</title>
+    <meta name="description" content="Ashion Template">
+    <meta name="keywords" content="Ashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'ashion/css/pagination.css' %}">  
+{% endblock %}
+
+    <!-- CSS Styles (только через static) -->
+    <link rel="stylesheet" href="{% static 'ashion/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'ashion/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'ashion/css/elegant-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'ashion/css/jquery-ui.min.css' %}">
+    <link rel="stylesheet" href="{% static 'ashion/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'ashion/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'ashion/css/slicknav.min.css' %}">
+    <link rel="stylesheet" href="{% static 'ashion/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+
+</head>
+
+<body>
+    <!-- для работы на моб.телефоне -->
+    {% include 'components/_offcanvas-menu.html' %}
+
+    <!-- Хедер -->
+    {% include 'components/_header.html' %}
+
+    <!-- Контент -->
+    {% block content %}
+    {% endblock %}
+
+    <!-- Футер -->
+    {% include 'components/_footer.html' %}
+
+    <!-- Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+    <!-- JS Plugins -->
+    <script src="{% static 'ashion/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'ashion/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'ashion/js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'ashion/js/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'ashion/js/mixitup.min.js' %}"></script>
+    <script src="{% static 'ashion/js/jquery.countdown.min.js' %}"></script>
+    <script src="{% static 'ashion/js/jquery.slicknav.js' %}"></script>
+    <script src="{% static 'ashion/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'ashion/js/jquery.nicescroll.min.js' %}"></script>
+    <!-- Главное ядро -->
+    <script src="{% static 'ashion/js/main.js' %}"></script>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="{% static 'js/swiper.js' %}"></script> 
+</body>
+</html>

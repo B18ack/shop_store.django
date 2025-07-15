@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}
+  {{ product.title }}
+{% endblock %}
+
+{% block content %}
+<section class="product-details spad">
+  <div class="container">
+    <div class="row">
+      <!-- Слайдер -->
+      <div class="col-lg-6 mb-4">
+        {% include './components/_product-gallery.html' %}
+      </div>
+
+      <!-- Информация о товаре -->
+      <div class="col-lg-6">
+        <div class="product__details__text">
+          <h3>{{ product.title }}</h3>
+
+          <div class="rating mb-3">
+            {% for i in "12345"|make_list %}
+              <i class="fa fa-star"></i>
+            {% endfor %}
+            <span>({{ total_comments }} review{{ total_comments|pluralize:"s" }})</span>
+          </div>
+
+          <div class="product__details__price mb-3">
+            {{ product.price|intcomma }} $
+          </div>
+
+          <p class="mb-4">
+            {{ product.description|default:"Description coming soon." }}
+          </p>
+
+          <!-- Add to Cart (стиль Ashion) -->
+        <div class="product__details__button mb-4 d-flex align-items-center gap-3">
+          <form action="{% url 'cart:cart_add' product.id %}" method="post" class="d-flex align-items-center gap-2 m-0 p-0">
+            {% csrf_token %}
+            <div class="quantity me-3">
+              <label for="id_quantity" class="quantity-label">Quantity:</label>
+              <input
+                type="number"
+                name="quantity"
+                id="id_quantity"
+                value="1"
+                min="1"
+                max="{{ product.quantity }}"
+                step="1"
+              />
+            </div>
+            <input type="hidden" name="update" value="False">
+            <button type="submit" class="primary-btn d-flex align-items-center gap-2">
+              <span class="icon_bag_alt"></span> Add to Cart
+            </button>
+          </form>
+
+          <!-- Кнопки избранного и сравнения -->
+          <ul class="product-actions d-flex align-items-center gap-3 m-1 p-0 list-unstyled mb-0">
+            {% if user.is_authenticated %}
+              {% if is_favorite %}
+                <li>
+                  <a href="{% url 'remove_from_favorites' product.id %}" class="icon_heart text-danger fs-4" title="Remove from Wishlist"></a>
+                </li>
+              {% else %}
+                <li>
+                  <a href="{% url 'add_to_favorites' product.id %}" class="icon_heart_alt fs-4" title="Add to Wishlist"></a>
+                </li>
+              {% endif %}
+            {% endif %}
+            <li>
+              <a href="{% url 'not_available' %}" class="icon_adjust-horiz fs-4" title="Compare"></a>
+            </li>
+          </ul>
+        </div>
+
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item bg-light d-flex justify-content-between">
+              <strong>Availability:</strong>
+              <span>
+                {% if product.quantity %}
+                  In stock: {{ product.quantity }} 
+                {% else %}
+                  Unavailable
+                {% endif %}
+              </span>
+            </li>
+            <li class="list-group-item bg-light d-flex justify-content-between">
+              <strong>Category:</strong>
+              <span>{{ product.category }}</span>
+            </li>
+            <li class="list-group-item bg-light d-flex justify-content-between">
+              <strong>Deliver:</strong>
+              <span>Free</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Вкладки -->
+      <div class="col-lg-12 mt-5">
+        <div class="product__details__tab">
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#desc" role="tab">Description</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Reviews ({{ total_comments }})</a>
+            </li>
+          </ul>
+
+          <div class="tab-content pt-4">
+            <!-- Описание -->
+            <div class="tab-pane fade show active" id="desc" role="tabpanel">
+              <p>{{ product.description|default:"Description coming soon." }}</p>
+            </div>
+
+            <!-- Отзывы -->
+            <div class="tab-pane fade" id="reviews" role="tabpanel">
+              {% if comments %}
+                <div class="list-group mb-4 mt-2">
+                  {% for comment in comments %}
+                    <div class="list-group-item list-group-item-action mb-3 rounded-4 shadow-sm border-start border-4 border-primary-subtle">
+                      <div class="d-flex justify-content-between mb-2">
+                        <span class="fw-semibold text-dark">{{ comment.author }}</span>
+                        <small class="text-muted">{{ comment.created_at|date:"d M Y, H:i" }}</small>
+                      </div>
+                      <p class="mb-0">{{ comment.text }}</p>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% else %}
+                <div class="alert alert-secondary text-center fst-italic">
+                  There are no reviews yet - be the first!
+                </div>
+              {% endif %}
+
+              {% if request.user.is_authenticated %}
+                <form method="post" class="p-4 border rounded shadow-sm bg-light">
+                  {% csrf_token %}
+                  {{ form.as_p }}
+                  <button class="btn btn-primary mt-3" type="submit">Send</button>
+                </form>
+              {% else %}
+                <div class="alert alert-warning text-center" role="alert">
+                  <i class="bi bi-lock"></i> Please sign in to send a review.
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

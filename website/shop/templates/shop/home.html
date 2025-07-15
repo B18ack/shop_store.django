@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Main page{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        {% include './categories.html' %}
+    </div>
+    <div>
+        {% include './product_section.html' %}
+    </div>
+    <div class="container-fluid">
+        {% include './banner.html' %}
+    </div>
+    <div>
+        {% include './trend.html' %}
+        {% include './discount.html' %}
+        {% include './services.html' %}
+    </div>
+    <div class="container-fluid">
+        {% include './instagram.html' %}
+    </div>
+{% endblock %}

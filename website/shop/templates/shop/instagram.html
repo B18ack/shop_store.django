@@ -1,0 +1,36 @@
+{% load static %}
+
+<!-- Instagram Begin -->
+<div class="instagram">
+    <div class="container-fluid">
+        <div class="row">
+
+            {# --- Статические изображения --- #}
+            {% for i in static_instas %}
+            <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                <div class="instagram__item set-bg"
+                     data-setbg="{% static 'ashion/img/instagram/insta-'|add:i|add:'.jpg' %}">
+                    <div class="instagram__text">
+                        <i class="fa fa-instagram"></i>
+                        <a href="https://www.instagram.com/fashionlook.official?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==">@ ashion_shop</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            {# --- Фото из базы данных (media) --- #}
+            {% for insta in media_instas %}
+            <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                <div class="instagram__item set-bg" data-setbg="{{ insta.image.url }}">
+                    <div class="instagram__text">
+                        <i class="fa fa-instagram"></i>
+                        <a href="https://www.instagram.com/fashionlook.official?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==">@ {{ insta.username }}</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+<!-- Instagram End -->

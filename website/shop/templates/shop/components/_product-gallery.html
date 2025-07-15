@@ -1,0 +1,112 @@
+<!-- Основная галерея -->
+<div class="swiper mySwiper2 mb-3" style="height: 450px;">
+  <div class="swiper-wrapper">
+    {% if product.productimage_set.exists %}
+      {% for obj in product.productimage_set.all %}
+        <div class="swiper-slide">
+          {% if obj.photo %}
+            <img src="{{ obj.photo.url }}" alt="{{ product.title }}" />
+          {% else %}
+            <img src="https://avatars.mds.yandex.net/i?id=4dddfe8b2d75b26be4b5ce0958e1dba6_l-4054461-images-thumbs&n=13" alt="No image" />
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="swiper-slide">
+        <img src="https://avatars.mds.yandex.net/i?id=4dddfe8b2d75b26be4b5ce0958e1dba6_l-4054461-images-thumbs&n=13" alt="No image" />
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Навигационные стрелки -->
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
+</div>
+
+<!-- Миниатюры -->
+<div class="swiper mySwiper">
+  <div class="swiper-wrapper">
+    {% if product.productimage_set.exists %}
+      {% for obj in product.productimage_set.all %}
+        <div class="swiper-slide">
+          {% if obj.photo %}
+            <img src="{{ obj.photo.url }}" alt="{{ product.title }}" />
+          {% else %}
+            <img src="https://avatars.mds.yandex.net/i?id=4dddfe8b2d75b26be4b5ce0958e1dba6_l-4054461-images-thumbs&n=13" alt="No image" />
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="swiper-slide">
+        <img src="https://avatars.mds.yandex.net/i?id=4dddfe8b2d75b26be4b5ce0958e1dba6_l-4054461-images-thumbs&n=13" alt="No image" />
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Стили -->
+<style>
+  .mySwiper2 {
+    height: 450px;
+  }
+
+  .mySwiper2 .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .mySwiper {
+    height: 100px;
+    margin-top: 10px;
+  }
+
+  .mySwiper .swiper-slide {
+    opacity: 0.4;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    box-sizing: border-box;
+  }
+
+  .mySwiper .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  .mySwiper .swiper-slide-thumb-active {
+    opacity: 1 !important;
+    border: 2px solid #0d6efd;
+    border-radius: 4px;
+  }
+</style>
+
+<!-- Скрипт Swiper -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const thumbsSwiper = new Swiper(".mySwiper", {
+      spaceBetween: 10,
+      slidesPerView: 4,
+      breakpoints: {
+        0: { slidesPerView: 3 },
+        768: { slidesPerView: 4 },
+        1024: { slidesPerView: 5 }
+      },
+      freeMode: true,
+      watchSlidesProgress: true,
+    });
+
+    const mainSwiper = new Swiper(".mySwiper2", {
+      spaceBetween: 10,
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      thumbs: {
+        swiper: thumbsSwiper,
+      },
+    });
+  });
+</script>

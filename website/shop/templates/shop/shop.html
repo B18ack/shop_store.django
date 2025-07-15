@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Shop page{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'ashion/css/pagination.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Shop Section Begin -->
+<section class="shop spad">
+  <div class="container">
+    <div class="row">
+
+      <!-- Категории -->
+      <div class="col-lg-3 col-md-4 mb-4">
+        <div class="shop__sidebar shadow-sm rounded">
+          <div class="section-title">
+            <h4 class="text-danger">Categories</h4>
+          </div>
+          <ul class="list-group">
+            {% for category in categories %}
+            <li class="list-group-item p-0 border-0 mb-2 {% if request.GET.category == category.slug %}bg-danger rounded{% endif %}">
+              <a href="?category={{ category.slug }}"
+                 class="d-block px-3 py-2 {% if request.GET.category == category.slug %}text-white{% else %}text-dark{% endif %}"
+                 style="text-decoration: none;">
+                👕👖 {{ category.name }} 👗👟
+                <hr class="my-1 text-danger">
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Вывод продуктов -->
+      <div class="col-lg-9 col-md-8">
+        {% if products %}
+        <div class="row g-2">
+          {% for product in products %}
+          <div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch mb-3">
+            {% include "./components/_gcard.html" with product=product %}
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
+          <h3 class="fs-2 text-center text-primary">Пока что нет товаров</h3>
+        </div>
+        {% endif %}
+
+        <!-- Pagination -->
+        {% if products.has_other_pages %}
+        <div class="mt-5 d-flex justify-content-center">
+          {% include 'components/_pagination.html' %}
+        </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- Shop Section End -->
+{% endblock %}

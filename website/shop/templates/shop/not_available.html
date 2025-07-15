@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Soon page{% endblock %}
+
+{% block content %}
+<section class="container py-5 d-flex flex-column align-items-center justify-content-center" style="min-height: 60vh;">
+  <div class="text-center">
+    <h2 class="fw-bold mb-3">The function is not yet available</h2>
+    <p class="lead mb-4">We are working on it. It will be ready soon!</p>
+    <a href="{% url 'home' %}" class="site-btn rounded-3 px-4 py-2">To the main page</a>
+  </div>
+</section>
+{% endblock %}
